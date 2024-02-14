@@ -1,1 +1,2 @@
-print('1st Task')
+file_open_game = open('game.txt')
+game_data = []
