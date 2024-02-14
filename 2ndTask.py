@@ -1,14 +1,40 @@
-У вас снова запросили отчет по ошибкам в играх. Теперь отчет
-необходимо предоставить о количестве багов в каждой игре.
-Для этого отсортируйте данные из файла game.txt по столбцу
-игры в алфавитном порядке с помощью быстрой сортировки.
-После этого предоставьте отчет в формате:
-<Игра 1> - количество багов: <count>
+def read_data(file_name):
+    """
+    Функция для чтения данных их файла
+    :param file_name: Имя файла
+    :return: список данных
+    """
+    with open('game.txt', encoding="utf8") as file:
+        data = file.readlines()
+    return data
 
-<Игра N> - количество багов: <count>
 
-Где N - количество уникальных игр.
+def sort_data(data):
+    """
+    Функция сортировки по столбцу игры
+    :param data: список данных
+    :return: sorted_data отсортированный список данных
+    """
+    sorted_data = sorted(data, key=lambda x: x.split(',')[0])
+    return sorted_data
 
-Не забудьте сделать комментарии к коду согласно стандартам
-документирования кода выбранного языка. После выполнения необходимо
-сделать локальные и удаленные изменения Вашего репозитория
+
+def generate_report(sorted_data):
+    """
+    Функция для генерации отчета о количестве багов в каждой игре
+    :param sorted_data: отсортированный список данных
+    """
+    report = {}
+    for row in sorted_data:
+        game = row.split('$')[0]
+        if game in report:
+            report[game] += 1
+        else:
+            report[game] = 1
+    for game, count in report.items():
+        print(f'{game} - количество багов: {count}')
+
+
+data = read_data('game.txt')
+sorted_data = sort_data(data)
+generate_report(sorted_data)
